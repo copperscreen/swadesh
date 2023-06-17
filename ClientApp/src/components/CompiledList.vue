@@ -4,12 +4,8 @@
     import EcosystemIcon from './icons/IconEcosystem.vue'
     import CommunityIcon from './icons/IconCommunity.vue'
     import SupportIcon from './icons/IconSupport.vue'
-    /*d efineProps< {
-      la ngs: string[]
-    } > ( )*/
 
     export default {
-        //  props: ['langs'],
         data() {
             return {
                 table: null,
@@ -19,27 +15,30 @@
             }
         },
         mounted() {
-            fetch('/list/compiled?urls=' + this.$route.query.l.join(';')).then(result => result.json()).then(
-                json => {
-                    this.table = json.table;
-                    let pos = 0;
-                    let mark = true;
-                    let marked = [];
-                    debugger;
-                    for (var i = 0; i < json.widths.length; i++) {
-                        if (mark) {
-                            for (var j = 0; j < json.widths[i]; j++) {
-                                marked.push(pos++);
+            if (this.$route.query.l?.length) {
+                fetch('/list/compiled?urls=' + this.$route.query.l.join(';')).then(result => result.json()).then(
+                    json => {
+                        this.table = json.table;
+                        let pos = 0;
+                        let mark = true;
+                        let marked = [];
+                        for (var i = 0; i < json.widths.length; i++) {
+                            if (mark) {
+                                for (var j = 0; j < json.widths[i]; j++) {
+                                    marked.push(pos++);
+                                }
+                            } else {
+                                pos += json.widths[i];
                             }
-                        } else {
-                            pos += json.widths[i];
+                            mark = !mark;
                         }
-                        mark = !mark;
+                        this.style = '<style>' + marked.map(_ => 'td:nth-child(' + (_ + 3) + ')').join(',') + '{ background: beige;} </style>';
+                        console.log(this.style);
                     }
-                    this.style = '<style>' + marked.map(_ => 'td:nth-child(' + (_ + 3) + ')').join(',') + '{ background: beige;} </style>';
-                    console.log(this.style);
-                }
-            )
+                )
+            } else {
+                this.$router.push({ name: 'home' });
+            }
         },
         methods: {
             merge(index) {
@@ -59,7 +58,7 @@
 <template>
     <head v-html="style"/>
     <div v-if="table">
-        Select rows to merge them, click column headers to (un)collapse
+        Select rows to merge them, click column headers to (un)collapse. <a href="/">Click here to return to the language list</a>
         <table>
             <tbody>
                 <tr v-for="(row, index) in table">
@@ -74,7 +73,7 @@
             </tbody>
         </table>
     </div>
-    <div v-else>Loading</div>
+    <div v-else class="waiting">Loading</div>
 </template>
 <style scoped>
     table {

@@ -11,13 +11,18 @@ export default {
   },
   methods: {
      selectall(ev){
-       this.checked.splice.apply(this.checked, [0, this.checked.length].concat(this.list.map(_ => _[0])) );
+        this.checked.splice.apply(this.checked, [0, this.checked.length].concat(this.list.map(_ => _[0])) );
      },
      selectnone(ev){
-       this.checked.splice(0);
+        this.checked.splice(0);
      },
-     compile(ev){
-       this.$router.push({name:'list', query: { l: Array.from(this.checked) } });
+      compile(ev) {
+          let checked = Array.from(this.checked);
+          if (checked.length) {
+              this.$router.push({ name: 'list', query: { l: Array.from(this.checked) } });
+          } else {
+              alert('Select languages');
+          }
      }
   }
 }
@@ -40,7 +45,7 @@ export default {
     <input type="button" value="Compile" @click="compile"/>
   </div>
   <div class="waiting" v-else>
-loading1
+Loading
   </div>
 </template>
 
