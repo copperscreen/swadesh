@@ -20,6 +20,6 @@ public class Function
     {
         string urls = input.QueryStringParameters["urls"];
         if (string.IsNullOrEmpty(urls)) return new CompiledTable();
-        return Scraper.Compiled(urls.Split(';'));
+        return Scraper.Compiled(urls.Split('~'));
     }
 }

@@ -19,7 +19,7 @@
             const url = 'https://7pc236yso44fjuntl2mjcnu7nu0jiabs.lambda-url.us-east-1.on.aws/?urls=';
             const query = this.$route.query.l;
             if ((typeof(query) != 'string') && query?.length) {
-                fetch(url + query.join(';')).then(result => result.json()).then(
+                fetch(url + query.join('~')).then(result => result.json()).then(
                     json => {
                         this.table = json.table;
                         let pos = 0;
