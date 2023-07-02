@@ -4,12 +4,12 @@
     import EcosystemIcon from './icons/IconEcosystem.vue'
     import CommunityIcon from './icons/IconCommunity.vue'
     import SupportIcon from './icons/IconSupport.vue'
-
+    const empty : string[][] = [];
     export default {
         data() {
             return {
-                table: null,
-                selected: null,
+                table: empty,
+                selected: -1,
                 collapsed: new Set(),
                 style: ''
             }
@@ -17,8 +17,9 @@
         mounted() {
             //const url = '/list/compiled?urls=';
             const url = 'https://7pc236yso44fjuntl2mjcnu7nu0jiabs.lambda-url.us-east-1.on.aws/?urls=';
-            if (this.$route.query.l?.length) {
-                fetch(url + this.$route.query.l.join(';')).then(result => result.json()).then(
+            const query = this.$route.query.l;
+            if ((typeof(query) != 'string') && query?.length) {
+                fetch(url + query.join(';')).then(result => result.json()).then(
                     json => {
                         this.table = json.table;
                         let pos = 0;
@@ -43,14 +44,14 @@
             }
         },
         methods: {
-            merge(index) {
+            merge(index : number) {
                 let src = this.table[this.selected];
                 let dst = this.table[index];
                 for (var i = 0; i < Math.min(dst.length, src.length); i++) {
                     dst[i] = dst[i] || src[i];
                 }
                 this.table.splice(this.selected, 1);
-                this.selected = undefined;
+                this.selected = -1;
             }
         }
     }
@@ -59,14 +60,14 @@
 
 <template>
     <head v-html="style"/>
-    <div v-if="table">
+    <div v-if="table.length">
         Select rows to merge them, click column headers to (un)collapse. <a href="/">Click here to return to the language list</a>
         <table>
             <tbody>
                 <tr v-for="(row, index) in table">
                     <td>
-                        <input type="checkbox" v-bind:checked="selected==index" @change="selected=selected?undefined:index" v-if="index && (!selected || selected == index)" />
-                        <span class="plus" v-if="index && selected && selected != index" @click="merge(index)"> + </span>
+                        <input type="checkbox" v-bind:checked="selected==index" @change="selected=(selected==-1)?index:-1" v-if="index && ( selected < 0 || selected == index)" />
+                        <span class="plus" v-if="index && selected >= 0 && selected != index" @click="merge(index)"> + </span>
                     </td>
                     <td v-for="(cell, index2) in row" @click="(!index) && ( (!collapsed.delete(index2)) && collapsed.add(index2) )">
                         <span v-bind:class="'cell ' + (collapsed.has(index2) ? 'collapsed' : '')">{{cell}}</span>

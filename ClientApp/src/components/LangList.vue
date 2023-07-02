@@ -1,8 +1,9 @@
 <script lang="ts">
+const empty : string[][] = [];
 export default {
   data() {
     return {
-      list: null,
+      list: empty,
       checked: []
     }
   },
@@ -12,13 +13,14 @@ export default {
      fetch( url ).then( result => result.json().then( json => this.list = json ));
   },
   methods: {
-     selectall(ev){
-        this.checked.splice.apply(this.checked, [0, this.checked.length].concat(this.list.map(_ => _[0])) );
+     selectall(ev: Event){
+        // @ts-ignore
+        this.checked.splice.apply(this.checked, [0, this.checked.length].concat(this.list.map(_ => _[0])));
      },
-     selectnone(ev){
+     selectnone(ev: Event){
         this.checked.splice(0);
      },
-      compile(ev) {
+      compile(ev: Event) {
           let checked = Array.from(this.checked);
           if (checked.length) {
               this.$router.push({ name: 'list', query: { l: Array.from(this.checked) } });
@@ -31,7 +33,7 @@ export default {
 </script>
 
 <template>
-  <div class="list" v-if=list>
+  <div class="list" v-if="list.length">
     <input type="button" value="Select all" @click="selectall" />
     <input type="button" value="Unselect all" @click="selectnone"/>
     <input type="button" value="Compile" @click="compile"/>
