@@ -8,8 +8,8 @@ export default {
     }
   },
   mounted() {
-     const url = 'list';
-     //const url = 'https://w2vi7f6kobib6lkrkfcjzwe4wy0hgoec.lambda-url.us-east-1.on.aws/';
+     //const url = 'list';
+     const url = 'https://w2vi7f6kobib6lkrkfcjzwe4wy0hgoec.lambda-url.us-east-1.on.aws/';
      fetch( url ).then( result => result.json().then( json => this.list = json ));
   },
   methods: {
