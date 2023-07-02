@@ -18,7 +18,8 @@ public class Function
     /// <returns></returns>
     public CompiledTable FunctionHandler(APIGatewayHttpApiV2ProxyRequest input, ILambdaContext context)
     {
-        if (string.IsNullOrEmpty(input.Body)) return new CompiledTable();
-        return Scraper.Compiled(input.Body.Split(';'));
+        string urls = input.QueryStringParameters["urls"];
+        if (string.IsNullOrEmpty(urls)) return new CompiledTable();
+        return Scraper.Compiled(urls.Split(';'));
     }
 }

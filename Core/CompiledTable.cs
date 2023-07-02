@@ -8,7 +8,7 @@ namespace Core
 {
     public class CompiledTable
     {
-        public string[][] Table { get; set; }
-        public int[] Widths { get; set; }
+        public string[][] table { get; set; }
+        public int[] widths { get; set; }
     }
 }

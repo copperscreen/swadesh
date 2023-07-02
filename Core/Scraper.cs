@@ -126,7 +126,7 @@ namespace Core
             result.RemoveRange(0, 1);
             result.Sort((a, b) => string.Compare(a[0], b[0]));
             result.InsertRange(0, first);
-            return new CompiledTable { Table = result.ToArray(), Widths = tables.Select(_ => _[0].Count - 1).ToArray() };
+            return new CompiledTable { table = result.ToArray(), widths = tables.Select(_ => _[0].Count - 1).ToArray() };
         }
     }
 }

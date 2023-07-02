@@ -15,8 +15,10 @@
             }
         },
         mounted() {
+            //const url = '/list/compiled?urls=';
+            const url = 'https://7pc236yso44fjuntl2mjcnu7nu0jiabs.lambda-url.us-east-1.on.aws/?urls=';
             if (this.$route.query.l?.length) {
-                fetch('/list/compiled?urls=' + this.$route.query.l.join(';')).then(result => result.json()).then(
+                fetch(url + this.$route.query.l.join(';')).then(result => result.json()).then(
                     json => {
                         this.table = json.table;
                         let pos = 0;
