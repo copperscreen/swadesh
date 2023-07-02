@@ -234,3 +234,7 @@ _Pvt_Extensions
 ClientApp/node_modules
 Core/bin
 Core/obj
+LambdaList/bin
+LambdaList/obj
+LambdaCompiled/bin
+LambdaCompiled/obj

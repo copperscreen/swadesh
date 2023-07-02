@@ -20,11 +20,19 @@
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Compile Remove="Core\**" />
+    <Compile Remove="LambdaList\**" />
+    <Compile Remove="LambdaCompiled\**" />
     <Content Remove="$(SpaRoot)**" />
     <Content Remove="Core\**" />
+    <Content Remove="LambdaList\**" />
+    <Content Remove="LambdaCompiled\**" />
     <EmbeddedResource Remove="Core\**" />
+    <EmbeddedResource Remove="LambdaList\**" />
+    <EmbeddedResource Remove="LambdaCompiled\**" />
     <None Remove="$(SpaRoot)**" />
     <None Remove="Core\**" />
+    <None Remove="LambdaList\**" />
+    <None Remove="LambdaCompiled\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
