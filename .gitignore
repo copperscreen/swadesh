@@ -232,3 +232,5 @@ _Pvt_Extensions
 .fake/
 
 ClientApp/node_modules
+Core/bin
+Core/obj
